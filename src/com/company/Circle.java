@@ -13,7 +13,7 @@ public class Circle implements ShapeInterface {
 
     protected final int WIDTH = 100;
     protected final int HEIGHT = 100;
-
+    Board board;
 
     protected int x;
     protected int y;
@@ -33,21 +33,13 @@ public class Circle implements ShapeInterface {
         y = random.nextInt(Config.HEIGHT - HEIGHT);
     }
 
-    void checkDistance() {
-        double AC = nodes.get(1).getX() - nodes.get(0).getX();
-        double BC = nodes.get(1).getY() - nodes.get(0).getY();
-        double AB = Math.sqrt(AC * AC + BC * BC);
-    }
+
 
 
     @Override
     public void move() {
         x += speedX;
         y += speedY;
-
-        double AC = nodes.get(1).getX() - nodes.get(0).getX();
-        double BC = nodes.get(1).getY() - nodes.get(0).getY();
-        double AB = Math.sqrt(AC * AC + BC * BC);
 
         if (x + WIDTH >= Config.WIDTH) {
             speedX = -speedX;
@@ -62,18 +54,24 @@ public class Circle implements ShapeInterface {
             speedY = -speedY;
 
         }
-        if (AB < 100) {
+        if(checkDistance()<100){
             speedX = -speedX;
             speedY = -speedY;
         }
-//        if ((Math.abs(nodes.get(0).getX() - nodes.get(1).getX()) <= 100) && (Math.abs(nodes.get(0).getY() - nodes.get(1).getY()) <= 100)) {
-//            speedX = -speedX;
-//        }if ((Math.abs(nodes.get(0).getX() - nodes.get(2).getX()) <= 100) && (Math.abs(nodes.get(0).getY() - nodes.get(2).getY()) <= 100)) {
-//            speedX = -speedX;
-//        }if ((Math.abs(nodes.get(1).getX() - nodes.get(2).getX()) <= 100) && (Math.abs(nodes.get(1).getY() - nodes.get(2).getY()) <= 100)) {
-//            speedX = -speedX;
-//        }
-
+    }
+    double checkDistance() {
+        double AC;
+        double BC;
+        double AB = 0;
+        for (int i=0;;i++) {
+            if(i==nodes.size()-1){
+                i=0;
+            }
+            AC = getX() - nodes.get(i).getX();
+            BC = getY() - nodes.get(i).getY();
+            AB = Math.sqrt(AC * AC + BC * BC);
+            return AB;
+        }
     }
 
     public void draw() {

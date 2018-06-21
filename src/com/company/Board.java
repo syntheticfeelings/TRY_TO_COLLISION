@@ -13,7 +13,7 @@ public class Board {
 
     public Board(GraphicsContext gc) {
         this.gc = gc;
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             nodes.add(new Circle(gc, nodes));
         }
     }
@@ -23,6 +23,7 @@ public class Board {
             shape.move();
         }
     }
+
 
     public void draw() {
         for (Circle shape : nodes) {
