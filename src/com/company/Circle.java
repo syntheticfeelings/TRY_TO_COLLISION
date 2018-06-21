@@ -3,7 +3,6 @@ package com.company;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,14 +15,13 @@ public class Circle implements ShapeInterface {
     protected final int HEIGHT = 100;
 
 
-
     protected int x;
     protected int y;
     protected double speedX;
     protected double speedY;
     List<Circle> nodes = new ArrayList<>();
 
-    public Circle(GraphicsContext gc,  List<Circle> nodes) {
+    public Circle(GraphicsContext gc, List<Circle> nodes) {
         this.gc = gc;
         this.nodes = nodes;
         Random random = new Random();
@@ -35,10 +33,10 @@ public class Circle implements ShapeInterface {
         y = random.nextInt(Config.HEIGHT - HEIGHT);
     }
 
-    void checkDistance(){
-        double AC = nodes.get(1).getX()-nodes.get(0).getX();
-        double BC = nodes.get(1).getY()-nodes.get(0).getY();
-        double AB = Math.sqrt(AC*AC+BC*BC);
+    void checkDistance() {
+        double AC = nodes.get(1).getX() - nodes.get(0).getX();
+        double BC = nodes.get(1).getY() - nodes.get(0).getY();
+        double AB = Math.sqrt(AC * AC + BC * BC);
     }
 
 
@@ -47,9 +45,9 @@ public class Circle implements ShapeInterface {
         x += speedX;
         y += speedY;
 
-        double AC = nodes.get(1).getX()-nodes.get(0).getX();
-        double BC = nodes.get(1).getY()-nodes.get(0).getY();
-        double AB = Math.sqrt(AC*AC+BC*BC);
+        double AC = nodes.get(1).getX() - nodes.get(0).getX();
+        double BC = nodes.get(1).getY() - nodes.get(0).getY();
+        double AB = Math.sqrt(AC * AC + BC * BC);
 
         if (x + WIDTH >= Config.WIDTH) {
             speedX = -speedX;
@@ -63,7 +61,8 @@ public class Circle implements ShapeInterface {
         if (y <= 0) {
             speedY = -speedY;
 
-        } if (AB<100){
+        }
+        if (AB < 100) {
             speedX = -speedX;
             speedY = -speedY;
         }
@@ -76,6 +75,7 @@ public class Circle implements ShapeInterface {
 //        }
 
     }
+
     public void draw() {
         gc.setFill(Color.RED);
         gc.fillOval(x, y, WIDTH, HEIGHT);

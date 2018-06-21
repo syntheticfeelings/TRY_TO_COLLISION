@@ -1,6 +1,7 @@
 package com.company;
 
 import javafx.scene.canvas.GraphicsContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,13 @@ public class Board {
             nodes.add(new Circle(gc, nodes));
         }
     }
+
     public void move() {
         for (Circle shape : nodes) {
             shape.move();
         }
     }
+
     public void draw() {
         for (Circle shape : nodes) {
             shape.draw();
