@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Board {
     private static final int WIDTH = 60;
-    int x = 0;
     private GraphicsContext gc;
     List<Circle> nodes = new ArrayList<>();
 

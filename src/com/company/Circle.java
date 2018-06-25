@@ -2,6 +2,10 @@ package com.company;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +14,8 @@ import java.util.Random;
 public class Circle implements ShapeInterface {
 
     protected final GraphicsContext gc;
-
     protected final int WIDTH = 100;
     protected final int HEIGHT = 100;
-    Board board;
-
     protected int x;
     protected int y;
     protected double speedX;
@@ -34,12 +35,53 @@ public class Circle implements ShapeInterface {
     }
 
 
+    void checkDistance1(Circle circle) {
+        double AC1;
+        double BC1;
+        double AC2;
+        double BC2;
+        double AC3;
+        double BC3;
 
+        AC1 = circle.getX() - nodes.get(1).getX();
+        BC1 = circle.getY() - nodes.get(1).getY();
+        double AB1 = Math.sqrt(AC1 * AC1 + BC1 * BC1);
+
+        AC2 = circle.getX() - nodes.get(2).getX();
+        BC2 = circle.getY() - nodes.get(2).getY();
+        double AB2 = Math.sqrt(AC2 * AC2 + BC2 * BC2);
+
+        AC3 = nodes.get(1).getX() - nodes.get(2).getX();
+        BC3 = nodes.get(1).getY() - nodes.get(2).getY();
+        double AB3 = Math.sqrt(AC3 * AC3 + BC3 * BC3);
+
+        if (AB1 < 100) {
+            nodes.get(1).speedX = -nodes.get(1).speedX;
+            nodes.get(1).speedY = -nodes.get(1).speedY;
+            circle.speedX = -circle.speedX;
+            circle.speedY = -circle.speedY;
+
+        }
+        if (AB2 < 100) {
+            nodes.get(2).speedX = -nodes.get(2).speedX;
+            nodes.get(2).speedY = -nodes.get(2).speedY;
+            circle.speedX = -circle.speedX;
+            circle.speedY = -circle.speedY;
+        }
+        if (AB3 < 100) {
+            nodes.get(2).speedX = -nodes.get(2).speedX;
+            nodes.get(2).speedY = -nodes.get(2).speedY;
+            nodes.get(1).speedX = -nodes.get(1).speedX;
+            nodes.get(1).speedY = -nodes.get(1).speedY;
+        }
+    }
 
     @Override
     public void move() {
         x += speedX;
         y += speedY;
+
+        checkDistance1(nodes.get(0));
 
         if (x + WIDTH >= Config.WIDTH) {
             speedX = -speedX;
@@ -54,25 +96,9 @@ public class Circle implements ShapeInterface {
             speedY = -speedY;
 
         }
-        if(checkDistance()<100){
-            speedX = -speedX;
-            speedY = -speedY;
-        }
+
     }
-    double checkDistance() {
-        double AC;
-        double BC;
-        double AB = 0;
-        for (int i=0;;i++) {
-            if(i==nodes.size()-1){
-                i=0;
-            }
-            AC = nodes.get(0).getX() - nodes.get(i+1).getX();
-            BC = nodes.get(0).getY() - nodes.get(i+1).getY();
-            AB = Math.sqrt(AC * AC + BC * BC);
-            return AB;
-        }
-    }
+
 
     public void draw() {
         gc.setFill(Color.RED);
