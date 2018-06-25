@@ -67,8 +67,8 @@ public class Circle implements ShapeInterface {
             if(i==nodes.size()-1){
                 i=0;
             }
-            AC = getX() - nodes.get(i).getX();
-            BC = getY() - nodes.get(i).getY();
+            AC = nodes.get(0).getX() - nodes.get(i+1).getX();
+            BC = nodes.get(0).getY() - nodes.get(i+1).getY();
             AB = Math.sqrt(AC * AC + BC * BC);
             return AB;
         }

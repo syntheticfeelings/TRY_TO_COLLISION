@@ -13,7 +13,7 @@ public class Board {
 
     public Board(GraphicsContext gc) {
         this.gc = gc;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             nodes.add(new Circle(gc, nodes));
         }
     }
