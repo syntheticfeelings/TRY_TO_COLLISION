@@ -35,53 +35,51 @@ public class Circle implements ShapeInterface {
     }
 
 
-    void checkDistance1(Circle circle) {
-        double AC1;
-        double BC1;
-        double AC2;
-        double BC2;
-        double AC3;
-        double BC3;
-
-        AC1 = circle.getX() - nodes.get(1).getX();
-        BC1 = circle.getY() - nodes.get(1).getY();
-        double AB1 = Math.sqrt(AC1 * AC1 + BC1 * BC1);
-
-        AC2 = circle.getX() - nodes.get(2).getX();
-        BC2 = circle.getY() - nodes.get(2).getY();
-        double AB2 = Math.sqrt(AC2 * AC2 + BC2 * BC2);
-
-        AC3 = nodes.get(1).getX() - nodes.get(2).getX();
-        BC3 = nodes.get(1).getY() - nodes.get(2).getY();
-        double AB3 = Math.sqrt(AC3 * AC3 + BC3 * BC3);
-
-        if (AB1 < 100) {
-            nodes.get(1).speedX = -nodes.get(1).speedX;
-            nodes.get(1).speedY = -nodes.get(1).speedY;
-            circle.speedX = -circle.speedX;
-            circle.speedY = -circle.speedY;
-
-        }
-        if (AB2 < 100) {
-            nodes.get(2).speedX = -nodes.get(2).speedX;
-            nodes.get(2).speedY = -nodes.get(2).speedY;
-            circle.speedX = -circle.speedX;
-            circle.speedY = -circle.speedY;
-        }
-        if (AB3 < 100) {
-            nodes.get(2).speedX = -nodes.get(2).speedX;
-            nodes.get(2).speedY = -nodes.get(2).speedY;
-            nodes.get(1).speedX = -nodes.get(1).speedX;
-            nodes.get(1).speedY = -nodes.get(1).speedY;
-        }
-    }
+//    void checkDistance1(Circle circle) {
+//        double AC1;
+//        double BC1;
+//        double AC2;
+//        double BC2;
+//        double AC3;
+//        double BC3;
+//
+//        AC1 = circle.getX() - nodes.get(1).getX();
+//        BC1 = circle.getY() - nodes.get(1).getY();
+//        double AB1 = Math.sqrt(AC1 * AC1 + BC1 * BC1);
+//
+//        AC2 = circle.getX() - nodes.get(2).getX();
+//        BC2 = circle.getY() - nodes.get(2).getY();
+//        double AB2 = Math.sqrt(AC2 * AC2 + BC2 * BC2);
+//
+//        AC3 = nodes.get(1).getX() - nodes.get(2).getX();
+//        BC3 = nodes.get(1).getY() - nodes.get(2).getY();
+//        double AB3 = Math.sqrt(AC3 * AC3 + BC3 * BC3);
+//
+//        if (AB1 < 100) {
+//            nodes.get(1).speedX = -nodes.get(1).speedX;
+//            nodes.get(1).speedY = -nodes.get(1).speedY;
+//            circle.speedX = -circle.speedX;
+//            circle.speedY = -circle.speedY;
+//
+//        }
+//        if (AB2 < 100) {
+//            nodes.get(2).speedX = -nodes.get(2).speedX;
+//            nodes.get(2).speedY = -nodes.get(2).speedY;
+//            circle.speedX = -circle.speedX;
+//            circle.speedY = -circle.speedY;
+//        }
+//        if (AB3 < 100) {
+//            nodes.get(2).speedX = -nodes.get(2).speedX;
+//            nodes.get(2).speedY = -nodes.get(2).speedY;
+//            nodes.get(1).speedX = -nodes.get(1).speedX;
+//            nodes.get(1).speedY = -nodes.get(1).speedY;
+//        }
+//    }
 
     @Override
     public void move() {
         x += speedX;
         y += speedY;
-
-        checkDistance1(nodes.get(0));
 
         if (x + WIDTH >= Config.WIDTH) {
             speedX = -speedX;
@@ -97,6 +95,23 @@ public class Circle implements ShapeInterface {
 
         }
 
+        for (Circle circle : nodes) {
+            if (circle == this) {
+                continue;
+            }
+            if (checkDistance(circle) < 100) {
+                speedX = -speedX;
+                speedY = -speedY;
+            }
+        }
+
+    }
+
+
+    private double checkDistance(Circle circle) {
+        double AC = getX() - circle.getX();
+        double BC = getY() - circle.getY();
+        return Math.sqrt(AC * AC + BC * BC);
     }
 
 
